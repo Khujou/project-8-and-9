@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void writeToFile(Soccer *team, char *clubName, char *league, char *leagueRegion,
-                 char *stadium, int leagueTitles, FILE *fp) {
+void writeToFile(char *clubName, char *league, char *leagueRegion, char *stadium, int leagueTitles, FILE *fp) {
+
+  Soccer *team = malloc(sizeof(Soccer));
 
   strcpy(team->club_name, clubName);
   strcpy(team->league, league);
@@ -53,11 +54,9 @@ void printOut(Soccer *teams[5]) {
 int main(void) {
 
   // INITIALIZING VARIABLES ----------------------------------------------------
-  Soccer *sounders = malloc(sizeof(Soccer));
-  Soccer *galaxy = malloc(sizeof(Soccer));
-  Soccer *fire = malloc(sizeof(Soccer));
-  Soccer *united = malloc(sizeof(Soccer));
-  Soccer *crew = malloc(sizeof(Soccer));
+  Soccer *teams[5] = {malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
+                      malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
+                      malloc(sizeof(Soccer))};
   long numBytesRead;
 
   // OPENING FILE FOR WRITING --------------------------------------------------
@@ -68,12 +67,12 @@ int main(void) {
   }
 
   // WRITING STRUCTS TO FILE ---------------------------------------------------
-  writeToFile(sounders, "Sounders", "MLS", "Seattle", "Lumen Field", 2, fp);
-  writeToFile(galaxy, "Galaxy", "MLS", "Los Angeles",
+  writeToFile("Sounders", "MLS", "Seattle", "Lumen Field", 2, fp);
+  writeToFile("Galaxy", "MLS", "Los Angeles",
               "Dignity Health Sports Park", 5, fp);
-  writeToFile(fire, "Fire", "MLS", "Chicago", "Soldier Field", 1, fp);
-  writeToFile(united, "Rapids", "MLS", "D.C.", "Audi Field", 1, fp);
-  writeToFile(crew, "Crew", "MLS", "Columbus", "Lower.com Field", 2, fp);
+  writeToFile("Fire", "MLS", "Chicago", "Soldier Field", 1, fp);
+  writeToFile("Rapids", "MLS", "D.C.", "Audi Field", 1, fp);
+  writeToFile("Crew", "MLS", "Columbus", "Lower.com Field", 2, fp);
 
   // CLOSING FILE FOR WRITING --------------------------------------------------
   fclose(fp);
@@ -84,12 +83,7 @@ int main(void) {
     printf("No2\n");
     return 2;
   }
-
-  // INITIALIZING ARRAY TO READ IN STRUCTS -------------------------------------
-  Soccer *teams[5] = {malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
-                      malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
-                      malloc(sizeof(Soccer))};
-
+  
   // OUTPUTTING STRUCT DATA THAT WAS READ IN -----------------------------------
 
   int i = 0;
