@@ -54,9 +54,7 @@ void printOut(Soccer *teams[5]) {
 int main(void) {
 
   // INITIALIZING VARIABLES ----------------------------------------------------
-  Soccer *teams[5] = {malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
-                      malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
-                      malloc(sizeof(Soccer))};
+  Soccer *teams[5] = {0};
   long numBytesRead;
 
   // OPENING FILE FOR WRITING --------------------------------------------------
