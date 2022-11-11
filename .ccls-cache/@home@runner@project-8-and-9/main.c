@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-void writeToFile(char *clubName, char *league, char *leagueRegion, char *stadium, int leagueTitles, FILE *fp) {
+void writeToFile(char *clubName, char *league, char *leagueRegion,
+                 char *stadium, int leagueTitles, FILE *fp) {
 
   Soccer *team = malloc(sizeof(Soccer));
 
@@ -16,26 +17,21 @@ void writeToFile(char *clubName, char *league, char *leagueRegion, char *stadium
   fwrite(&team, sizeof(team), 1, fp);
 }
 
-void redTextColor() {
-  printf("\033[0;31m");
-}
+void redTextColor() { printf("\033[0;31m"); }
 
-void resetTextColor() {
-  printf("\033[0m");
-}
+void resetTextColor() { printf("\033[0m"); }
 
-void secret(char*begin, char*variable, char*end){
+void secret(char *begin, char *variable, char *end) {
   printf("%s", begin);
   redTextColor();
   printf("%s", variable);
   resetTextColor();
   printf("%s", end);
-  
 }
 
 void printOut(Soccer *teams[5]) {
 
-  char* str = malloc(3);
+  char *str = malloc(3);
 
   for (int i = 0; i < 5; i++) {
 
@@ -45,10 +41,8 @@ void printOut(Soccer *teams[5]) {
     secret("They play at ", teams[i]->stadium, ",\n");
     sprintf(str, "%d", teams[i]->league_titles);
     secret("They have won ", str, " League Title(s).\n");
-    
   }
   printf("\n");
-  
 }
 
 int main(void) {
@@ -66,8 +60,8 @@ int main(void) {
 
   // WRITING STRUCTS TO FILE ---------------------------------------------------
   writeToFile("Sounders", "MLS", "Seattle", "Lumen Field", 2, fp);
-  writeToFile("Galaxy", "MLS", "Los Angeles",
-              "Dignity Health Sports Park", 5, fp);
+  writeToFile("Galaxy", "MLS", "Los Angeles", "Dignity Health Sports Park", 5,
+              fp);
   writeToFile("Fire", "MLS", "Chicago", "Soldier Field", 1, fp);
   writeToFile("Rapids", "MLS", "D.C.", "Audi Field", 1, fp);
   writeToFile("Crew", "MLS", "Columbus", "Lower.com Field", 2, fp);
@@ -81,7 +75,7 @@ int main(void) {
     printf("No2\n");
     return 2;
   }
-  
+
   // OUTPUTTING STRUCT DATA THAT WAS READ IN -----------------------------------
 
   int i = 0;
