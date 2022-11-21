@@ -14,18 +14,14 @@ void writeToFile(char *clubName, char *league, char *leagueRegion,
   strcpy(team->stadium, stadium);
   team->league_titles = leagueTitles;
 
-  fwrite(&team, sizeof(team), 1, fp);
+  fwrite(team, sizeof(Soccer), 1, fp);
 }
-
-void redTextColor() { printf("\033[0;31m"); }
-
-void resetTextColor() { printf("\033[0m"); }
 
 void secret(char *begin, char *variable, char *end) {
   printf("%s", begin);
-  redTextColor();
+  printf("\033[0;31m");
   printf("%s", variable);
-  resetTextColor();
+  printf("\033[0m");
   printf("%s", end);
 }
 
@@ -48,29 +44,37 @@ void printOut(Soccer *teams[5]) {
 int main(void) {
 
   // INITIALIZING VARIABLES ----------------------------------------------------
-  Soccer *teams[5] = {0};
+  Soccer *teams[5] = {malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
+                      malloc(sizeof(Soccer)), malloc(sizeof(Soccer)),
+                      malloc(sizeof(Soccer))};
   long numBytesRead;
 
   // OPENING FILE FOR WRITING --------------------------------------------------
-  FILE *fp = fopen("soccer.dat", "wb");
-  if (fp == NULL) {
-    printf("failed to open file\n");
-    return 1;
-  }
+  FILE *fp;
+  printf("%lu\n\n", sizeof(Soccer));
+  /*
+    fp = fopen("soccer.dat", "wb");
 
-  // WRITING STRUCTS TO FILE ---------------------------------------------------
-  writeToFile("Sounders", "MLS", "Seattle", "Lumen Field", 2, fp);
-  writeToFile("Galaxy", "MLS", "Los Angeles", "Dignity Health Sports Park", 5,
-              fp);
-  writeToFile("Fire", "MLS", "Chicago", "Soldier Field", 1, fp);
-  writeToFile("Rapids", "MLS", "D.C.", "Audi Field", 1, fp);
-  writeToFile("Crew", "MLS", "Columbus", "Lower.com Field", 2, fp);
+    if (fp == NULL) {
+      printf("failed to open file\n");
+      return 1;
+    }
 
-  // CLOSING FILE FOR WRITING --------------------------------------------------
-  fclose(fp);
+    // WRITING STRUCTS TO FILE
+    --------------------------------------------------- writeToFile("Sounders",
+    "MLS", "Seattle", "Lumen Field", 2, fp); writeToFile("Galaxy", "MLS", "Los
+    Angeles", "Dignity Health Sports Park", 5, fp); writeToFile("Fire", "MLS",
+    "Chicago", "Soldier Field", 1, fp); writeToFile("Rapids", "MLS", "D.C.",
+    "Audi Field", 1, fp); writeToFile("Crew", "MLS", "Columbus", "Lower.com
+    Field", 2, fp);
 
+    printf("1");
+
+    // CLOSING FILE FOR WRITING
+    -------------------------------------------------- fclose(fp);
+  */
   // OPENING FILE FOR READING --------------------------------------------------
-  fopen("soccer.dat", "rb");
+  fp = fopen("soccer.dat", "rb");
   if (fp == NULL) {
     printf("No2\n");
     return 2;
@@ -79,11 +83,12 @@ int main(void) {
   // OUTPUTTING STRUCT DATA THAT WAS READ IN -----------------------------------
 
   int i = 0;
-  numBytesRead = fread(&teams[i], sizeof(teams[i]), 1, fp);
+  numBytesRead = fread(teams[0], sizeof(Soccer) - 8, 1, fp);
 
   while (numBytesRead != 0) {
     i++;
-    numBytesRead = fread(&teams[i], sizeof(teams[i]), 1, fp);
+    numBytesRead = fread(teams[i], sizeof(Soccer) - 8, 1, fp);
+    teams[i - 1]->next = teams[i];
   }
 
   printOut(teams);
